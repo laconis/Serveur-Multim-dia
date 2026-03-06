@@ -1,2 +1,41 @@
-# Serveur-Multim-dia
+# Serveur-Multimédia
 Gestion de Films/Series
+
+<html>
+
+<head>
+  
+</head>
+
+<body>
+  
+<div id="header">
+<img src="" class="logo">
+</div>
+
+<div id="sea">
+  <input type="text" class="inputSearchFilmSeries">
+  <select>
+    <option>Item 1</option>
+  </select>  
+    <select>
+    <option>Item 1</option>
+  </select>
+</div>
+
+<div id="allData">
+
+  <div class="detail">
+  
+</div>
+
+
+</div>
+
+
+  
+</body>
+
+
+  
+</html>
