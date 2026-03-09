@@ -1,10 +1,4 @@
 
-# Serveur-Multimédia
-Gestion de Films/Series
-
-
-
-document.write(`
 
 <html>
 
@@ -69,7 +63,7 @@ document.write(`
 </div>
 
 <div id="histo">
-<div class="reco">Recommdations</div>
+<div class="reco">Recommandation</div>
 <div class="DatadetailHisto">&nbsp</div>
 <div class="DatadetailHisto">&nbsp</div>
 <div class="DatadetailHisto">&nbsp</div>
@@ -86,20 +80,28 @@ document.write(`
 body{background-color:black;}
 header{height:50px;}
 #searchMaster{margin:auto;width:1200px;clear:both;margin-bottom:25px;}
-.inputSearchFilmSeries{display:block;margin:auto;width:800px;height:40px;border-radius:10px;float:left;padding-left:50px;}
+.inputSearchFilmSeries{display:block;margin:auto;width:800px;height:40px;border-radius:10px;float:left;padding-left:15px;}
 .sel1{display:block;float:left;width:150px;height:40px;border-radius:10px;padding-left:20px;margin-left:20px;}
 .sel2{display:block;float:left;width:150px;height:40px;border-radius:10px;padding-left:20px;margin-left:20px;}
 .logo{color:red;font-size:20px;font-weight:bold;}
 .content{width:1650px;margin:auto;}
 #allData{width:1250px;float:left;margin-left:200px;}
-.Datadetail{width:200px;height:250px;float:left;background-color:#f0f0f0;margin:25px;float:left;border-radius:5px;float:left;}
-.DatadetailHisto{width:200px;height:250px;float:left;background-color:#f0f0f0;margin:25px;float:left;border-radius:5px;float:left;background-color:yellow;}
+.Datadetail{width:200px;height:250px;float:left;background-color:white;margin:25px;float:left;border-radius:5px;float:left;}
+.DatadetailHisto{width:200px;height:250px;float:left;margin:25px;float:left;border-radius:5px;float:left;background-color:white;}
 .reco{color:white;font-weight:bold; }
 #histo{ width:300px;float:right;}
 .DatadetailHisto{background-color:yellow;}
+.Datadetail:hover{transform:scale(1.05);animation:man;animation-duration:0.2s;cursor:pointer;}
+
+@keyframes man{
+from{transform:scale(1.00);}
+to{transform:scale(1.05);}
+}
+
+
 </style>
   </html>
-`);
+
 
 
   
