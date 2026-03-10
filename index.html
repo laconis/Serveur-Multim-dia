@@ -1,5 +1,9 @@
 
 
+
+document.write(`
+
+
 <html>
 
 <head>
@@ -16,6 +20,8 @@
 
 <input type="text" class="inputSearchFilmSeries" placeholder="Recherche">
 
+
+
   <select class="sel1">
     <option>Films</option>
     <option>Séries</option>
@@ -29,41 +35,25 @@
 </div>  <!-- Fin searchMaster -->
 
 
+
 <div id="content">
 
 <div id="allData">
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
-<div class="Datadetail">&nbsp</div>
+<div class="super-card">Item 1</div>
+<div class="super-card">Item 2</div>
+<div class="super-card">Item 3</div>
+<div class="super-card">Item 4</div>
+<div class="super-card">Item 5</div>
+<div class="super-card">Item 6</div>
+<div class="super-card">Item 7</div>
+<div class="super-card">Item 8</div>
+<div class="super-card">Item 9</div>
+<div class="super-card">Item 10</div>
+<div class="super-card">Item 11</div>
 </div>
 
 <div id="histo">
-<div class="reco">Recommandation</div>
+<div class="reco">Recommandations</div>
 <div class="DatadetailHisto">&nbsp</div>
 <div class="DatadetailHisto">&nbsp</div>
 <div class="DatadetailHisto">&nbsp</div>
@@ -77,31 +67,78 @@
 
 <style>
 
-body{background-color:black;}
+body{mix-blend-mode:difference;}
+
+/*
+body{background:linear-gradient(90deg , red ,orange);
+--webkit-background-clip: text;
+color:transparent;
+}
+*/
+
 header{height:50px;}
-#searchMaster{margin:auto;width:1200px;clear:both;margin-bottom:25px;}
-.inputSearchFilmSeries{display:block;margin:auto;width:800px;height:40px;border-radius:10px;float:left;padding-left:15px;}
-.sel1{display:block;float:left;width:150px;height:40px;border-radius:10px;padding-left:20px;margin-left:20px;}
-.sel2{display:block;float:left;width:150px;height:40px;border-radius:10px;padding-left:20px;margin-left:20px;}
+#searchMaster{margin:auto;width:1200px;clear:both;margin-bottom:100px;}
+.inputSearchFilmSeries{display:block;margin:auto;width:800px;height:40px;border-radius:5px;float:left;padding-left:15px;}
+.sel1{display:block;float:left;width:150px;height:40px;border-radius:5px;padding-left:20px;margin-left:20px;}
+.sel2{display:block;float:left;width:200px;height:40px;border-radius:5px;padding-left:20px;margin-left:20px;}
 .logo{color:red;font-size:20px;font-weight:bold;}
 .content{width:1650px;margin:auto;}
 #allData{width:1250px;float:left;margin-left:200px;}
-.Datadetail{width:200px;height:250px;float:left;background-color:white;margin:25px;float:left;border-radius:5px;float:left;}
-.DatadetailHisto{width:200px;height:250px;float:left;margin:25px;float:left;border-radius:5px;float:left;background-color:white;}
+
+
+.Datadetail{width:200px;height:250px;float:left;background-color:white;margin:25px;float:left;border-radius:5px;
+float:left;box-shadow:0 10px 25px rgba(0,0,0,0,2);border-radius:10px;   animation: fadeIn 0.6s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;width:200px;height:250px;}
+
+.Datadetail:hover{transform:scale(1.05);animation:man;animation-duration:0.2s;cursor:pointer;background-color:#5ea1b8;  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.2);}
+
+
+
+.DatadetailHisto{width:200px;height:250px;float:left;margin:25px;float:left;border-radius:5px;float:left;}
+
+
 .reco{color:white;font-weight:bold; }
 #histo{ width:300px;float:right;}
 .DatadetailHisto{background-color:yellow;}
-.Datadetail:hover{transform:scale(1.05);animation:man;animation-duration:0.2s;cursor:pointer;}
+
 
 @keyframes man{
 from{transform:scale(1.00);}
 to{transform:scale(1.05);}
 }
 
+button{transition:0.3s;}
+button{transform:scale(1.1);}
+
+
+.super-card {
+   width:200px;
+   height:250px;
+   float:left;
+  margin:25px;
+  animation: fadeIn 0.6s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 7px 15px rgba(0,0,0,0.2);
+}
+
+.super-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.2);
+}
+
 
 </style>
+
   </html>
 
 
 
-  
+`);
+
+
+function changeValue(select) { alert("Valeur choisie : " + select.value); }
+
+
+
+
