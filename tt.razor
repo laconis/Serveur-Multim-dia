@@ -1,0 +1,122 @@
+@page "/nicoflix"
+
+<PageTitle>NicoFlix</PageTitle>
+
+<div class="nicoflix-page">
+    <header class="topbar">
+        <div class="logo">NicoFlix</div>
+    </header>
+
+    <section class="search-panel">
+        <input class="input-search"
+               type="text"
+               placeholder="Recherche..."
+               @bind="searchText"
+               @bind:event="oninput" />
+
+        <select class="select-box" @bind="selectedType">
+            <option value="">Tous</option>
+            <option value="Film">Films</option>
+            <option value="Série">Séries</option>
+            <option value="Documentaire">Documentaires</option>
+        </select>
+
+        <select class="select-box" @bind="selectedGenre">
+            <option value="">Tous les genres</option>
+            @foreach (var genre in genres)
+            {
+                <option value="@genre">@genre</option>
+            }
+        </select>
+
+        <select class="select-box" @bind="selectedYear">
+            <option value="">Toutes les années</option>
+            @foreach (var year in years)
+            {
+                <option value="@year">@year</option>
+            }
+        </select>
+    </section>
+
+    <section class="content-zone">
+        @if (FilteredItems.Any())
+        {
+            <div class="cards-grid">
+                @foreach (var item in FilteredItems)
+                {
+                    <div class="media-card">
+                        <div class="thumb">
+                            <span>@item.Title.Substring(0, 1)</span>
+                        </div>
+
+                        <div class="card-body">
+                            <h3>@item.Title</h3>
+                            <p class="meta">@item.Type · @item.Genre · @item.Year</p>
+                            <p class="description">@item.Description</p>
+
+                            <div class="card-actions">
+                                <button class="btn-primary">Voir</button>
+                                <button class="btn-secondary">Infos</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                Aucun résultat trouvé.
+            </div>
+        }
+    </section>
+</div>
+
+@code {
+    private string searchText = string.Empty;
+    private string selectedType = string.Empty;
+    private string selectedGenre = string.Empty;
+    private string selectedYear = string.Empty;
+
+    private List<MediaItem> items = new()
+    {
+        new() { Title = "Inception", Type = "Film", Genre = "Science-fiction", Year = 2010, Description = "Un voleur infiltre les rêves pour y dérober des secrets." },
+        new() { Title = "Breaking Bad", Type = "Série", Genre = "Drame", Year = 2008, Description = "Un professeur de chimie devient fabricant de méthamphétamine." },
+        new() { Title = "Planet Earth", Type = "Documentaire", Genre = "Nature", Year = 2006, Description = "Un voyage spectaculaire à travers les écosystèmes de la planète." },
+        new() { Title = "Interstellar", Type = "Film", Genre = "Science-fiction", Year = 2014, Description = "Une mission spatiale pour sauver l'humanité." },
+        new() { Title = "Dark", Type = "Série", Genre = "Mystère", Year = 2017, Description = "Des disparitions dans une petite ville révèlent un secret temporel." },
+        new() { Title = "Our Planet", Type = "Documentaire", Genre = "Nature", Year = 2019, Description = "Documentaire sur la beauté du monde et sa fragilité." },
+        new() { Title = "The Batman", Type = "Film", Genre = "Action", Year = 2022, Description = "Batman enquête sur une série de crimes à Gotham." },
+        new() { Title = "Mindhunter", Type = "Série", Genre = "Thriller", Year = 2017, Description = "Des agents du FBI étudient la psychologie des tueurs en série." }
+    };
+
+    private List<string> genres => items
+        .Select(x => x.Genre)
+        .Distinct()
+        .OrderBy(x => x)
+        .ToList();
+
+    private List<int> years => items
+        .Select(x => x.Year)
+        .Distinct()
+        .OrderByDescending(x => x)
+        .ToList();
+
+    private IEnumerable<MediaItem> FilteredItems => items.Where(x =>
+        (string.IsNullOrWhiteSpace(searchText) ||
+         x.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+         x.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase)) &&
+        (string.IsNullOrWhiteSpace(selectedType) || x.Type == selectedType) &&
+        (string.IsNullOrWhiteSpace(selectedGenre) || x.Genre == selectedGenre) &&
+        (string.IsNullOrWhiteSpace(selectedYear) || x.Year.ToString() == selectedYear)
+    );
+
+    public class MediaItem
+    {
+        public string Title { get; set; } = "";
+        public string Type { get; set; } = "";
+        public string Genre { get; set; } = "";
+        public int Year { get; set; }
+        public string Description { get; set; } = "";
+    }
+}
