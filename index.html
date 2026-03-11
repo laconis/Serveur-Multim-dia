@@ -1,136 +1,276 @@
-
-<html>
-
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NicoFlix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #141414;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            height: 70px;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: #111;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: #e50914;
+            letter-spacing: 1px;
+        }
+
+        .page {
+            max-width: 1600px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        #searchMaster {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .inputSearchFilmSeries,
+        .sel1,
+        .sel2,
+        .sel3 {
+            height: 45px;
+            border: none;
+            border-radius: 10px;
+            background: #1f1f1f;
+            color: white;
+            padding: 0 15px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.25s;
+        }
+
+        .inputSearchFilmSeries {
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .sel1,
+        .sel2,
+        .sel3 {
+            min-width: 160px;
+            cursor: pointer;
+        }
+
+        .inputSearchFilmSeries:focus,
+        .sel1:focus,
+        .sel2:focus,
+        .sel3:focus {
+            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.25);
+            background: #2a2a2a;
+        }
+
+        #content {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        #allData {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 22px;
+        }
+
+        .super-card {
+            height: 280px;
+            background: linear-gradient(180deg, #2a2a2a, #1b1b1b);
+            border-radius: 14px;
+            padding: 18px;
+            display: flex;
+            align-items: flex-end;
+            font-weight: bold;
+            font-size: 18px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .super-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.08));
+            pointer-events: none;
+        }
+
+        .super-card span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .super-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 16px 35px rgba(0,0,0,0.35);
+            background: linear-gradient(180deg, #353535, #202020);
+        }
+
+        #histo {
+            background: #181818;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            position: sticky;
+            top: 95px;
+        }
+
+        .reco {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 18px;
+            color: #ffffff;
+        }
+
+        .DatadetailHisto {
+            height: 120px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #f5c400, #ffde59);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .DatadetailHisto:hover {
+            transform: scale(1.03);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1100px) {
+            #content {
+                grid-template-columns: 1fr;
+            }
+
+            #histo {
+                position: static;
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                height: auto;
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .inputSearchFilmSeries,
+            .sel1,
+            .sel2,
+            .sel3 {
+                width: 100%;
+            }
+
+            #allData {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+
+            .super-card {
+                height: 230px;
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  
-<header>
-<div class="logo">NicoFlix</div>
-</header>
 
-<div id="searchMaster">
+    <header>
+        <div class="logo">NicoFlix</div>
+    </header>
 
-<input type="text" class="inputSearchFilmSeries" placeholder="Recherche">
+    <div class="page">
+        <div id="searchMaster">
+            <input type="text" class="inputSearchFilmSeries" placeholder="Recherche un film, une série, un documentaire..." />
 
+            <select class="sel1">
+                <option>Films</option>
+                <option>Séries</option>
+                <option>Documentaires</option>
+            </select>
 
+            <select class="sel2">
+                <option>Genre</option>
+                <option>Action</option>
+                <option>Comédie</option>
+                <option>Science-fiction</option>
+                <option>Thriller</option>
+            </select>
 
-  <select class="sel1">
-    <option>Films</option>
-    <option>Séries</option>
-    <option>Documentaires</option>
-  </select>  
+            <select class="sel3">
+                <option>Trier par</option>
+                <option>Ajout récent</option>
+                <option>Populaire</option>
+                <option>Note</option>
+            </select>
+        </div>
 
-    <select class="sel2">
-    <option>Sel 2</option>
-  </select>
+        <div id="content">
+            <div>
+                <div class="section-title">Catalogue</div>
+                <div id="allData">
+                    <div class="super-card"><span>Item 1</span></div>
+                    <div class="super-card"><span>Item 2</span></div>
+                    <div class="super-card"><span>Item 3</span></div>
+                    <div class="super-card"><span>Item 4</span></div>
+                    <div class="super-card"><span>Item 5</span></div>
+                    <div class="super-card"><span>Item 6</span></div>
+                    <div class="super-card"><span>Item 7</span></div>
+                    <div class="super-card"><span>Item 8</span></div>
+                    <div class="super-card"><span>Item 9</span></div>
+                    <div class="super-card"><span>Item 10</span></div>
+                    <div class="super-card"><span>Item 11</span></div>
+                    <div class="super-card"><span>Item 12</span></div>
+                    <div class="super-card"><span>Item 13</span></div>
+                    <div class="super-card"><span>Item 14</span></div>
+                    <div class="super-card"><span>Item 15</span></div>
+                </div>
+            </div>
 
-</div>  <!-- Fin searchMaster -->
-
-
-
-<div id="content">
-
-<div id="allData">
-<div class="super-card">Item 1</div>
-<div class="super-card">Item 2</div>
-<div class="super-card">Item 3</div>
-<div class="super-card">Item 4</div>
-<div class="super-card">Item 5</div>
-<div class="super-card">Item 6</div>
-<div class="super-card">Item 7</div>
-<div class="super-card">Item 8</div>
-<div class="super-card">Item 9</div>
-<div class="super-card">Item 10</div>
-<div class="super-card">Item 11</div>
-</div>
-
-<div id="histo">
-<div class="reco">Recommandations</div>
-<div class="DatadetailHisto">&nbsp</div>
-<div class="DatadetailHisto">&nbsp</div>
-<div class="DatadetailHisto">&nbsp</div>
-<div class="DatadetailHisto">&nbsp</div>
-</div>
-
-</div>
-
+            <aside id="histo">
+                <div class="reco">Recommandations</div>
+                <div class="DatadetailHisto"></div>
+                <div class="DatadetailHisto"></div>
+                <div class="DatadetailHisto"></div>
+                <div class="DatadetailHisto"></div>
+            </aside>
+        </div>
+    </div>
 
 </body>
-
-<style>
-
-body{mix-blend-mode:difference;}
-
-/*
-body{background:linear-gradient(90deg , red ,orange);
---webkit-background-clip: text;
-color:transparent;
-}
-*/
-
-header{height:50px;}
-#searchMaster{margin:auto;width:1200px;clear:both;margin-bottom:100px;}
-.inputSearchFilmSeries{display:block;margin:auto;width:800px;height:40px;border-radius:5px;float:left;padding-left:15px;}
-.sel1{display:block;float:left;width:150px;height:40px;border-radius:5px;padding-left:20px;margin-left:20px;}
-.sel2{display:block;float:left;width:200px;height:40px;border-radius:5px;padding-left:20px;margin-left:20px;}
-.logo{color:red;font-size:20px;font-weight:bold;}
-.content{width:1650px;margin:auto;}
-#allData{width:1250px;float:left;margin-left:200px;}
-
-
-.Datadetail{width:200px;height:250px;float:left;background-color:white;margin:25px;float:left;border-radius:5px;
-float:left;box-shadow:0 10px 25px rgba(0,0,0,0,2);border-radius:10px;   animation: fadeIn 0.6s ease;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;width:200px;height:250px;}
-
-.Datadetail:hover{transform:scale(1.05);animation:man;animation-duration:0.2s;cursor:pointer;background-color:#5ea1b8;  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.2);}
-
-
-
-.DatadetailHisto{width:200px;height:250px;float:left;margin:25px;float:left;border-radius:5px;float:left;}
-
-
-.reco{color:white;font-weight:bold; }
-#histo{ width:300px;float:right;}
-.DatadetailHisto{background-color:yellow;}
-
-
-@keyframes man{
-from{transform:scale(1.00);}
-to{transform:scale(1.05);}
-}
-
-button{transition:0.3s;}
-button{transform:scale(1.1);}
-
-
-.super-card {
-   width:200px;
-   height:250px;
-   float:left;
-  margin:25px;
-  animation: fadeIn 0.6s ease;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 7px 15px rgba(0,0,0,0.2);
-}
-
-.super-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.2);
-}
-
-
-</style>
-
-  </html>
-
-
-
-
-
-
-
-
+</html>
