@@ -1,0 +1,106 @@
+@page "/add-video"
+@using Microsoft.AspNetCore.Components.Forms
+@inject IWebHostEnvironment Env
+@inject AppDbContext Db
+@inject NavigationManager Nav
+
+<h3>Ajouter une vidéo</h3>
+
+<EditForm Model="model" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Titre</label>
+        <InputText class="form-control" @bind-Value="model.Title" />
+    </div>
+
+    <div class="mb-3">
+        <label>Fichier vidéo</label>
+        <InputFile OnChange="HandleFileSelected" accept="video/*" />
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(message))
+    {
+        <div class="alert alert-info mt-3">@message</div>
+    }
+
+    <button type="submit" class="btn btn-primary" disabled="@isUploading">
+        @(isUploading ? "Upload..." : "Enregistrer")
+    </button>
+</EditForm>
+
+@code {
+    private VideoFormModel model = new();
+    private IBrowserFile? selectedFile;
+    private string? message;
+    private bool isUploading;
+
+    private void HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+        message = $"Fichier sélectionné : {selectedFile.Name}";
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (selectedFile is null)
+        {
+            message = "Choisis une vidéo.";
+            return;
+        }
+
+        isUploading = true;
+        message = null;
+
+        try
+        {
+            var uploadsFolder = Path.Combine(Env.WebRootPath, "videos");
+            Directory.CreateDirectory(uploadsFolder);
+
+            var ext = Path.GetExtension(selectedFile.Name);
+            var uniqueName = $"{Guid.NewGuid()}{ext}";
+            var physicalPath = Path.Combine(uploadsFolder, uniqueName);
+
+            const long maxFileSize = 1024L * 1024L * 1024L * 2L; // 2 Go
+
+            await using (var stream = selectedFile.OpenReadStream(maxFileSize))
+            await using (var fs = new FileStream(physicalPath, FileMode.Create))
+            {
+                await stream.CopyToAsync(fs);
+            }
+
+            var video = new Video
+            {
+                Title = model.Title,
+                FilePath = $"/videos/{uniqueName}",
+                SizeBytes = selectedFile.Size,
+                ContentType = selectedFile.ContentType,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            Db.Videos.Add(video);
+            await Db.SaveChangesAsync();
+
+            message = "Vidéo ajoutée avec succès 🎬";
+            model = new VideoFormModel();
+            selectedFile = null;
+
+            // Nav.NavigateTo("/videos");
+        }
+        catch (Exception ex)
+        {
+            message = $"Erreur : {ex.Message}";
+        }
+        finally
+        {
+            isUploading = false;
+        }
+    }
+
+    public class VideoFormModel
+    {
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Title { get; set; } = "";
+    }
+}
