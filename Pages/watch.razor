@@ -1,0 +1,168 @@
+@page "/watch/{Id:int}"
+@inject IVideoService VideoService
+@inject NavigationManager Navigation
+
+<PageTitle>NicoFlix - Watch</PageTitle>
+
+@if (isLoading)
+{
+    <div class="watch-loading">Chargement...</div>
+}
+else if (video is null)
+{
+    <div class="watch-error">
+        <h2>Vidéo introuvable</h2>
+        <button class="btn btn-primary" @onclick="GoHome">Retour au catalogue</button>
+    </div>
+}
+else
+{
+    <div class="watch-page">
+        <header class="watch-header">
+            <div class="logo" @onclick="GoHome">NicoFlix</div>
+            <button class="back-link" @onclick="GoHome">← Retour catalogue</button>
+        </header>
+
+        <div class="watch-container">
+            <main class="player-card">
+                <div class="video-box">
+                    <video controls preload="metadata" poster="@video.CoverPath">
+                        <source src="@video.FilePath" type="video/mp4" />
+                        Votre navigateur ne supporte pas la lecture vidéo.
+                    </video>
+                </div>
+
+                <div class="video-info">
+                    <div class="badges">
+                        <span class="badge red">@GetCategoryLabel(video.Category)</span>
+                        <span class="badge dark">@(!string.IsNullOrWhiteSpace(video.Resolution) ? video.Resolution : "Résolution inconnue")</span>
+                        <span class="badge dark">@FormatDuration(video.DurationSec)</span>
+                    </div>
+
+                    <h1>@video.Title</h1>
+
+                    <div class="meta">
+                        <span>Ajouté le @video.CreatedAt.ToString("dd/MM/yyyy")</span>
+                        <span>ID #@video.Id</span>
+                    </div>
+
+                    <div class="desc">
+                        @(string.IsNullOrWhiteSpace(video.Description)
+                            ? "Aucune description disponible pour cette vidéo."
+                            : video.Description)
+                    </div>
+
+                    <div class="action-row">
+                        <button class="btn btn-primary">▶ Lecture</button>
+                        <button class="btn btn-secondary" @onclick="CopyLink">Partager</button>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="side-card">
+                <div class="side-title">À regarder ensuite</div>
+                <div class="side-subtitle">Quelques pépites du même coin de la galaxie 🎬</div>
+
+                <div class="reco-list">
+                    @if (recommendations.Count == 0)
+                    {
+                        <div class="empty-reco">Aucune recommandation disponible.</div>
+                    }
+                    else
+                    {
+                        @foreach (var reco in recommendations)
+                        {
+                            <div class="reco-item" @onclick="() => GoToWatch(reco.Id)">
+                                <div class="reco-thumb" style="@($"background-image:url('{reco.CoverPath}')")"></div>
+
+                                <div class="reco-body">
+                                    <h3>@reco.Title</h3>
+                                    <div class="reco-meta">
+                                        <span>@FormatDuration(reco.DurationSec)</span>
+                                        <span>@(!string.IsNullOrWhiteSpace(reco.Resolution) ? reco.Resolution : "N/A")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </aside>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private VideoItem? video;
+    private List<VideoItem> recommendations = new();
+    private bool isLoading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+
+        video = await VideoService.GetByIdAsync(Id);
+
+        if (video is not null)
+        {
+            recommendations = await VideoService.GetRecommendationsAsync(video.Id, video.Category, 8);
+        }
+        else
+        {
+            recommendations = new();
+        }
+
+        isLoading = false;
+    }
+
+    private void GoHome()
+    {
+        Navigation.NavigateTo("/");
+    }
+
+    private void GoToWatch(int id)
+    {
+        Navigation.NavigateTo($"/watch/{id}");
+    }
+
+    private Task CopyLink()
+    {
+        Navigation.NavigateTo(Navigation.Uri, forceLoad: false);
+        return Task.CompletedTask;
+    }
+
+    private static string FormatDuration(int? seconds)
+    {
+        if (seconds is null || seconds <= 0)
+            return "Inconnue";
+
+        var total = seconds.Value;
+        var h = total / 3600;
+        var m = (total % 3600) / 60;
+        var s = total % 60;
+
+        if (h > 0)
+            return $"{h}h {m:00}min";
+
+        if (m > 0)
+            return $"{m}min {s:00}s";
+
+        return $"{s}s";
+    }
+
+    private static string GetCategoryLabel(int category)
+    {
+        return category switch
+        {
+            1 => "Film",
+            2 => "Série",
+            3 => "Documentaire",
+            _ => "Vidéo"
+        };
+    }
+}
+
+
+
