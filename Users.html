@@ -1,0 +1,104 @@
+
+ document.write( `
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NicoFlix - Users</title>
+</head>
+
+<body>
+
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Valeur</th>
+  </tr>
+  <tr>
+    <td>Nicolas</td>
+    <td class="badge-user admin"><a href="#">Admin</a></td>
+  </tr>
+<tr>
+    <td>Vanessa</td>
+   <td class="badge-user user"><a href="#">User</a></td>
+  </tr>
+<tr>
+    <td>Timéo</td>
+   <td class="badge-user user"><a href="#">User</a></td>
+  </tr>
+<tr>
+    <td>Léo</td>
+   <td class="badge-user user"><a href="#">User</a></td>
+  </tr>
+</table>
+
+</body>
+
+
+<style>
+
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        :root {
+            --bg: #141414;
+            --bg-soft: #1b1b1b;
+            --bg-card: #202020;
+            --bg-card-2: #2b2b2b;
+            --text: #ffffff;
+            --text-soft: #b3b3b3;
+            --red: #e50914;
+            --red-hover: #ff1f2d;
+            --yellow: #f5c400;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }  
+
+body {
+            background:
+                radial-gradient(circle at top left, rgba(229, 9, 20, 0.10), transparent 22%),
+                linear-gradient(to bottom, #0f0f0f, #141414 180px);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+        }
+
+
+        table {
+    width: 60%;
+    margin: auto; /* centre horizontalement */
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #333;
+    padding: 8px;
+
+  }
+
+
+
+.badge-user {
+width:50px;
+height:30px;
+background-color:orange;
+border-radius:10px;
+text-align:center;
+}
+
+.admin{background-color:red;color:white;
+text-decoration:none;}
+.user{background-color:green;color:white;
+text-decoration:none;}
+
+
+</style>
+
+`);
