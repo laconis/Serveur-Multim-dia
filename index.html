@@ -1,3 +1,10 @@
+ 
+
+
+
+
+document.write( `
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,42 +18,186 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #141414;
+            --bg-soft: #1b1b1b;
+            --bg-card: #202020;
+            --bg-card-2: #2b2b2b;
+            --text: #ffffff;
+            --text-soft: #b3b3b3;
+            --red: #e50914;
+            --red-hover: #ff1f2d;
+            --yellow: #f5c400;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
         body {
-            background: #141414;
-            color: #ffffff;
+            background:
+                radial-gradient(circle at top left, rgba(229, 9, 20, 0.10), transparent 22%),
+                linear-gradient(to bottom, #0f0f0f, #141414 180px);
+            color: var(--text);
             font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
         header {
-            height: 70px;
-            padding: 0 30px;
+            height: 72px;
+            padding: 0 28px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            background: #111;
+            border-bottom: 1px solid var(--border);
+            background: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
         .logo {
             font-size: 30px;
-            font-weight: bold;
-            color: #e50914;
+            font-weight: 900;
+            color: var(--red);
             letter-spacing: 1px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 18px;
+        }
+
+        .nav a {
+            color: var(--text-soft);
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            color: var(--text);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--red), #7a0007);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: var(--shadow);
         }
 
         .page {
             max-width: 1600px;
-            margin: 30px auto;
-            padding: 0 20px;
+            margin: 28px auto;
+            padding: 0 20px 40px;
+        }
+
+        .hero {
+            min-height: 250px;
+            border-radius: 22px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            background:
+                linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0.35)),
+                url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=80") center/cover;
+            display: flex;
+            align-items: center;
+            padding: 36px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(229, 9, 20, 0.18);
+            color: #ffb3b7;
+            border: 1px solid rgba(229, 9, 20, 0.35);
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            color: #dddddd;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            height: 45px;
+            padding: 0 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
+            background: var(--red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--red-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.12);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.18);
+            transform: translateY(-2px);
         }
 
         #searchMaster {
             display: flex;
             gap: 15px;
             align-items: center;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
@@ -54,15 +205,15 @@
         .sel1,
         .sel2,
         .sel3 {
-            height: 45px;
-            border: none;
-            border-radius: 10px;
+            height: 46px;
+            border: 1px solid transparent;
+            border-radius: 12px;
             background: #1f1f1f;
             color: white;
             padding: 0 15px;
             font-size: 15px;
             outline: none;
-            transition: 0.25s;
+            transition: 0.25s ease;
         }
 
         .inputSearchFilmSeries {
@@ -77,100 +228,234 @@
             cursor: pointer;
         }
 
+        .inputSearchFilmSeries::placeholder {
+            color: #909090;
+        }
+
         .inputSearchFilmSeries:focus,
         .sel1:focus,
         .sel2:focus,
         .sel3:focus {
-            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.25);
+            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.22);
+            border-color: rgba(229, 9, 20, 0.25);
             background: #2a2a2a;
         }
 
         #content {
             display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 30px;
+            grid-template-columns: 1fr 330px;
+            gap: 28px;
             align-items: start;
+        }
+
+        .catalog-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-soft);
         }
 
         #allData {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 22px;
         }
 
         .super-card {
-            height: 280px;
-            background: linear-gradient(180deg, #2a2a2a, #1b1b1b);
-            border-radius: 14px;
-            padding: 18px;
-            display: flex;
-            align-items: flex-end;
-            font-weight: bold;
-            font-size: 18px;
-            color: white;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-            cursor: pointer;
-            position: relative;
+            height: 320px;
+            border-radius: 16px;
             overflow: hidden;
-        }
-
-        .super-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.08));
-            pointer-events: none;
-        }
-
-        .super-card span {
             position: relative;
-            z-index: 1;
+            background:
+                linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.16)),
+                url("https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80") center/cover;
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+        }
+
+        .super-card:nth-child(2n) {
+            background:
+                linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.16)),
+                url("https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=900&q=80") center/cover;
+        }
+
+        .super-card:nth-child(3n) {
+            background:
+                linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.16)),
+                url("https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80") center/cover;
+        }
+
+        .super-card:nth-child(4n) {
+            background:
+                linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.16)),
+                url("https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?auto=format&fit=crop&w=900&q=80") center/cover;
         }
 
         .super-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 16px 35px rgba(0,0,0,0.35);
-            background: linear-gradient(180deg, #353535, #202020);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.42);
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .top-badges {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 28px;
+            padding: 0 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+            backdrop-filter: blur(6px);
+        }
+
+        .badge-red {
+            background: rgba(229, 9, 20, 0.85);
+            color: white;
+        }
+
+        .badge-dark {
+            background: rgba(0, 0, 0, 0.55);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card-bottom h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #dddddd;
+            margin-bottom: 10px;
+        }
+
+        .desc {
+            font-size: 13px;
+            color: #cccccc;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .mini-btn {
+            height: 34px;
+            padding: 0 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .mini-btn.play {
+            background: white;
+            color: black;
+        }
+
+        .mini-btn.play:hover {
+            transform: translateY(-1px);
+        }
+
+        .mini-btn.add {
+            background: rgba(255,255,255,0.12);
+            color: white;
+        }
+
+        .mini-btn.add:hover {
+            background: rgba(255,255,255,0.18);
+            transform: translateY(-1px);
         }
 
         #histo {
-            background: #181818;
-            border-radius: 16px;
+            background: linear-gradient(180deg, #181818, #121212);
+            border: 1px solid var(--border);
+            border-radius: 18px;
             padding: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            box-shadow: var(--shadow);
             position: sticky;
-            top: 95px;
+            top: 92px;
         }
 
         .reco {
             font-size: 22px;
             font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .reco-sub {
+            font-size: 13px;
+            color: var(--text-soft);
             margin-bottom: 18px;
-            color: #ffffff;
         }
 
         .DatadetailHisto {
-            height: 120px;
-            border-radius: 12px;
-            margin-bottom: 15px;
+            min-height: 90px;
+            border-radius: 14px;
+            margin-bottom: 14px;
             background: linear-gradient(135deg, #f5c400, #ffde59);
+            color: #1a1a1a;
+            padding: 14px;
             box-shadow: 0 6px 16px rgba(0,0,0,0.18);
-            transition: transform 0.2s ease;
+            transition: 0.2s ease;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
         }
 
         .DatadetailHisto:hover {
-            transform: scale(1.03);
+            transform: translateY(-3px) scale(1.01);
         }
 
-        .section-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
+        .DatadetailHisto strong {
+            font-size: 15px;
         }
 
-        @media (max-width: 1100px) {
+        .DatadetailHisto span {
+            font-size: 13px;
+            color: #333;
+        }
+
+        @media (max-width: 1150px) {
             #content {
                 grid-template-columns: 1fr;
             }
@@ -180,14 +465,18 @@
             }
         }
 
-        @media (max-width: 700px) {
-            header {
-                height: auto;
-                padding: 20px;
+        @media (max-width: 800px) {
+            .nav {
+                display: none;
             }
 
-            .logo {
-                font-size: 24px;
+            .hero {
+                min-height: 220px;
+                padding: 24px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
             }
 
             .inputSearchFilmSeries,
@@ -196,14 +485,35 @@
             .sel3 {
                 width: 100%;
             }
+        }
+
+        @media (max-width: 560px) {
+            header {
+                padding: 0 16px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .page {
+                padding: 0 14px 30px;
+            }
 
             #allData {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
 
             .super-card {
-                height: 230px;
-                font-size: 16px;
+                height: 270px;
+            }
+
+            .card-bottom h3 {
+                font-size: 17px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
             }
         }
     </style>
@@ -211,10 +521,39 @@
 <body>
 
     <header>
-        <div class="logo">NicoFlix</div>
+        <div class="header-left">
+            <div class="logo">NicoFlix</div>
+            <nav class="nav">
+                <a href="#" class="active">Accueil</a>
+                <a href="#">Films</a>
+                <a href="#">Séries</a>
+                <a href="#">Documentaires</a>
+                <a href="#">Ma liste</a>
+            </nav>
+        </div>
+
+        <div class="header-right">
+            <div class="avatar">N</div>
+        </div>
     </header>
 
     <div class="page">
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">NOUVEAUTÉ NICOFLIX</div>
+                <h1>Le cinéma à portée de clic</h1>
+                <p>
+                    Explore ton catalogue perso avec une interface sombre, moderne et pensée pour les marathons du soir.
+                    Films, séries, documentaires et recommandations bien grasses 🍿
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary">▶ Regarder</button>
+                    <button class="btn btn-secondary">+ Ma liste</button>
+                </div>
+            </div>
+        </section>
+
         <div id="searchMaster">
             <input type="text" class="inputSearchFilmSeries" placeholder="Recherche un film, une série, un documentaire..." />
 
@@ -241,36 +580,157 @@
         </div>
 
         <div id="content">
-            <div>
-                <div class="section-title">Catalogue</div>
-                <div id="allData">
-                    <div class="super-card"><span>Item 1</span></div>
-                    <div class="super-card"><span>Item 2</span></div>
-                    <div class="super-card"><span>Item 3</span></div>
-                    <div class="super-card"><span>Item 4</span></div>
-                    <div class="super-card"><span>Item 5</span></div>
-                    <div class="super-card"><span>Item 6</span></div>
-                    <div class="super-card"><span>Item 7</span></div>
-                    <div class="super-card"><span>Item 8</span></div>
-                    <div class="super-card"><span>Item 9</span></div>
-                    <div class="super-card"><span>Item 10</span></div>
-                    <div class="super-card"><span>Item 11</span></div>
-                    <div class="super-card"><span>Item 12</span></div>
-                    <div class="super-card"><span>Item 13</span></div>
-                    <div class="super-card"><span>Item 14</span></div>
-                    <div class="super-card"><span>Item 15</span></div>
+            <main>
+                <div class="catalog-head">
+                    <div>
+                        <div class="section-title">Catalogue</div>
+                        <div class="section-subtitle">15 contenus disponibles</div>
+                    </div>
                 </div>
-            </div>
+
+                <div id="allData">
+                    <div class="super-card">
+                        <div class="card-overlay">
+                            <div class="top-badges">
+                                <span class="badge badge-red">Nouveau</span>
+                                <span class="badge badge-dark">★ 8.7</span>
+                            </div>
+                            <div class="card-bottom">
+                                <h3>Item 1</h3>
+                                <div class="meta">
+                                    <span>2025</span>
+                                    <span>Action</span>
+                                    <span>2h04</span>
+                                </div>
+                                <div class="desc">Une aventure sombre et nerveuse dans un monde qui clignote comme un serveur sous caféine.</div>
+                                <div class="card-actions">
+                                    <button class="mini-btn play">▶ Lecture</button>
+                                    <button class="mini-btn add">+ Liste</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="super-card">
+                        <div class="card-overlay">
+                            <div class="top-badges">
+                                <span class="badge badge-red">Top</span>
+                                <span class="badge badge-dark">★ 9.1</span>
+                            </div>
+                            <div class="card-bottom">
+                                <h3>Item 2</h3>
+                                <div class="meta">
+                                    <span>2024</span>
+                                    <span>Thriller</span>
+                                    <span>1h52</span>
+                                </div>
+                                <div class="desc">Suspense, tension et néons froids dans une histoire qui ne laisse jamais respirer.</div>
+                                <div class="card-actions">
+                                    <button class="mini-btn play">▶ Lecture</button>
+                                    <button class="mini-btn add">+ Liste</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="super-card">
+                        <div class="card-overlay">
+                            <div class="top-badges">
+                                <span class="badge badge-red">Série</span>
+                                <span class="badge badge-dark">★ 8.4</span>
+                            </div>
+                            <div class="card-bottom">
+                                <h3>Item 3</h3>
+                                <div class="meta">
+                                    <span>2023</span>
+                                    <span>Science-fiction</span>
+                                    <span>10 épisodes</span>
+                                </div>
+                                <div class="desc">Un futur cablé de partout où chaque décision laisse une trace numérique un peu inquiétante.</div>
+                                <div class="card-actions">
+                                    <button class="mini-btn play">▶ Lecture</button>
+                                    <button class="mini-btn add">+ Liste</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="super-card">
+                        <div class="card-overlay">
+                            <div class="top-badges">
+                                <span class="badge badge-red">Docu</span>
+                                <span class="badge badge-dark">★ 8.0</span>
+                            </div>
+                            <div class="card-bottom">
+                                <h3>Item 4</h3>
+                                <div class="meta">
+                                    <span>2022</span>
+                                    <span>Documentaire</span>
+                                    <span>1h35</span>
+                                </div>
+                                <div class="desc">Un voyage visuel et dense, parfait pour remplir le cerveau comme un SSD flambant neuf.</div>
+                                <div class="card-actions">
+                                    <button class="mini-btn play">▶ Lecture</button>
+                                    <button class="mini-btn add">+ Liste</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Film</span><span class="badge badge-dark">★ 7.9</span></div><div class="card-bottom"><h3>Item 5</h3><div class="meta"><span>2021</span><span>Comédie</span><span>1h44</span></div><div class="desc">Un chaos drôle, bien rythmé, avec assez d’énergie pour réveiller une base SQL en sommeil.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Film</span><span class="badge badge-dark">★ 8.2</span></div><div class="card-bottom"><h3>Item 6</h3><div class="meta"><span>2024</span><span>Action</span><span>2h10</span></div><div class="desc">Des poursuites, des ombres et un montage sec comme une requête bien indexée.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Série</span><span class="badge badge-dark">★ 8.8</span></div><div class="card-bottom"><h3>Item 7</h3><div class="meta"><span>2025</span><span>Thriller</span><span>8 épisodes</span></div><div class="desc">Ça démarre doucement, puis ça mord d’un coup comme un bug planqué depuis 3 semaines.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Top</span><span class="badge badge-dark">★ 9.0</span></div><div class="card-bottom"><h3>Item 8</h3><div class="meta"><span>2023</span><span>Science-fiction</span><span>2h01</span></div><div class="desc">Une ambiance immense, froide et brillante, comme un data center dans les étoiles.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Docu</span><span class="badge badge-dark">★ 7.8</span></div><div class="card-bottom"><h3>Item 9</h3><div class="meta"><span>2020</span><span>Documentaire</span><span>1h21</span></div><div class="desc">Un regard précis sur le réel, sans sucre inutile ni pirouette de scénario.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Film</span><span class="badge badge-dark">★ 8.5</span></div><div class="card-bottom"><h3>Item 10</h3><div class="meta"><span>2022</span><span>Drame</span><span>1h57</span></div><div class="desc">Une histoire plus lente mais dense, avec ce petit goût de nuit urbaine sous pluie fine.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Film</span><span class="badge badge-dark">★ 8.1</span></div><div class="card-bottom"><h3>Item 11</h3><div class="meta"><span>2021</span><span>Aventure</span><span>2h12</span></div><div class="desc">Une virée visuelle qui empile les décors réussis comme une stack bien rangée.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Série</span><span class="badge badge-dark">★ 8.3</span></div><div class="card-bottom"><h3>Item 12</h3><div class="meta"><span>2025</span><span>Comédie</span><span>12 épisodes</span></div><div class="desc">Léger, vif, et suffisamment absurde pour une soirée sans prise de tête.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Film</span><span class="badge badge-dark">★ 7.7</span></div><div class="card-bottom"><h3>Item 13</h3><div class="meta"><span>2022</span><span>Thriller</span><span>1h48</span></div><div class="desc">Ça joue sur les silences, les regards et les détails presque invisibles.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Docu</span><span class="badge badge-dark">★ 8.6</span></div><div class="card-bottom"><h3>Item 14</h3><div class="meta"><span>2024</span><span>Documentaire</span><span>1h40</span></div><div class="desc">Dense, élégant, instructif, avec juste ce qu’il faut de souffle pour captiver.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                    <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Top</span><span class="badge badge-dark">★ 9.3</span></div><div class="card-bottom"><h3>Item 15</h3><div class="meta"><span>2025</span><span>Action</span><span>2h18</span></div><div class="desc">Le gros morceau du catalogue. Celui qui débarque avec les bottes, la bande-son et l’impact.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                </div>
+
+
+        <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Top</span><span class="badge badge-dark">★ 9.3</span></div><div class="card-bottom"><h3>Item 15</h3><div class="meta"><span>2025</span><span>Action</span><span>2h18</span></div><div class="desc">Le gros morceau du catalogue. Celui qui débarque avec les bottes, la bande-son et l’impact.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                </div>
+
+        <div class="super-card"><div class="card-overlay"><div class="top-badges"><span class="badge badge-red">Top</span><span class="badge badge-dark">★ 9.3</span></div><div class="card-bottom"><h3>Item 15</h3><div class="meta"><span>2025</span><span>Action</span><span>2h18</span></div><div class="desc">Le gros morceau du catalogue. Celui qui débarque avec les bottes, la bande-son et l’impact.</div><div class="card-actions"><button class="mini-btn play">▶ Lecture</button><button class="mini-btn add">+ Liste</button></div></div></div></div>
+                </div>
+
+            </main>
 
             <aside id="histo">
                 <div class="reco">Recommandations</div>
-                <div class="DatadetailHisto"></div>
-                <div class="DatadetailHisto"></div>
-                <div class="DatadetailHisto"></div>
-                <div class="DatadetailHisto"></div>
+                <div class="reco-sub">Basées sur tes derniers visionnages</div>
+
+                <div class="DatadetailHisto">
+                    <strong>Cyber Night</strong>
+                    <span>Science-fiction • 2025 • 2h03</span>
+                </div>
+
+                <div class="DatadetailHisto">
+                    <strong>Cold Signal</strong>
+                    <span>Thriller • Mini-série • 8 épisodes</span>
+                </div>
+
+                <div class="DatadetailHisto">
+                    <strong>Last Tunnel</strong>
+                    <span>Action • 2024 • 1h54</span>
+                </div>
+
+                <div class="DatadetailHisto">
+                    <strong>Archive Zero</strong>
+                    <span>Documentaire • Tech • 1h26</span>
+                </div>
             </aside>
         </div>
     </div>
 
 </body>
 </html>
+
+
+`);
+
+
+
