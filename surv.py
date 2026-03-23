@@ -26,10 +26,12 @@ def format_duree(seconds):
 
 
 # ---------------------------------------------------------
-#  RECUPERATION DES PROCESSUS PYTHON
+#  RECUPERATION DES PROCESSUS PYTHON + FILTRES
 # ---------------------------------------------------------
 def get_python_processes():
+    filtre = search_var.get().lower()
     result = []
+
     for p in psutil.process_iter(['pid', 'name', 'memory_info', 'cpu_percent',
                                   'cmdline', 'create_time']):
         try:
@@ -38,9 +40,16 @@ def get_python_processes():
 
             cmd = " ".join(p.info['cmdline']) if p.info['cmdline'] else ""
 
-            # Filtrage par user si demandé
+            # Filtre user passé en paramètre
             if user_filter and user_filter not in cmd.lower():
                 continue
+
+            # Filtre recherche en direct
+            if filtre:
+                if (filtre not in cmd.lower()
+                    and filtre not in str(p.info['pid'])
+                    and filtre not in p.info['name'].lower()):
+                    continue
 
             mem = p.info['memory_info'].rss / 1024 / 1024
             cpu = p.cpu_percent(interval=None)
@@ -149,13 +158,31 @@ def refresh_table():
 
 
 # ---------------------------------------------------------
+#  CALLBACK RECHERCHE EN DIRECT
+# ---------------------------------------------------------
+def on_search(*args):
+    refresh_table()
+
+
+# ---------------------------------------------------------
 #  INTERFACE TKINTER
 # ---------------------------------------------------------
 fen = tk.Tk()
 fen.title("Gestionnaire de scripts Python")
 
+# Barre de recherche
+search_var = tk.StringVar()
+search_var.trace_add("write", on_search)
+
+frame_search = tk.Frame(fen)
+frame_search.pack(pady=5)
+
+tk.Label(frame_search, text="Recherche :").pack(side="left", padx=5)
+entry_search = tk.Entry(frame_search, textvariable=search_var, width=30)
+entry_search.pack(side="left")
+
 if user_filter:
-    tk.Label(fen, text=f"Filtre utilisateur : {user_filter}", fg="blue").pack(pady=5)
+    tk.Label(fen, text=f"Filtre utilisateur (paramètre --user) : {user_filter}", fg="blue").pack(pady=5)
 
 colonnes = ("PID", "CPU", "Mémoire", "Durée", "Commande")
 table = ttk.Treeview(fen, columns=colonnes, show="headings")
