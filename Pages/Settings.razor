@@ -1,1 +1,250 @@
+ 
 
+
+document.write(`
+
+<h1 class="titleGeneral"> Parametres principaux </h1>
+
+<div class="theme-card">
+  <p class="theme-title">Thème</p>
+  <div class="theme-radio-group" id="themeRadios">
+    <label class="theme-radio">
+      <input type="radio" name="theme" value="light">
+      <span class="theme-radio-control"></span>
+      Clair
+    </label>
+
+    <label class="theme-radio">
+      <input type="radio" name="theme" value="dark">
+      <span class="theme-radio-control"></span>
+      Sombre
+    </label>
+
+    <label class="theme-radio">
+      <input type="radio" name="theme" value="auto" checked>
+      <span class="theme-radio-control automodesombre"></span>
+      Auto
+    </label>
+  </div>
+</div>
+
+
+  <div class="nicobox">
+   Vignettes par page :  
+   <select>
+      <option>20</option>
+      <option>50</option>
+      <option>100</option>
+    </select>
+<hr>
+
+Sauvegarde Temps de Connexion : Oui/Non. <hr>
+Version Application:  v1.0<hr>
+<button>Reinitialiser Application</button>
+<a href="#">Info Base de donnees</a>
+<hr>
+
+
+  </div>
+
+
+
+<style>
+.titleGeneral{text-align:center;}
+
+
+.radio-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #555;
+  border-radius: 50%;
+  position: relative;
+  transition: 0.25s ease;
+}
+
+.radio-dark input:checked + .radio-custom {
+  border-color: #7aa2ff;
+  box-shadow: 0 0 6px #7aa2ff;
+}
+
+.radio-dark input:checked + .radio-custom::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: #7aa2ff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+
+:root {
+  --md-primary: #6750a4;
+  --md-primary-container: #eaddff;
+  --md-on-primary-container: #21005d;
+
+  --md-surface: #fdf8ff;
+  --md-on-surface: #1d1b20;
+
+  --md-surface-dark: #141218;
+  --md-on-surface-dark: #e6e0f0;
+  --md-primary-dark: #d0bcff;
+  --md-primary-container-dark: #4f378b;
+  --md-on-primary-container-dark: #f3daff;
+}
+
+/* Thème clair / sombre global */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --surface: var(--md-surface);
+  --on-surface: var(--md-on-surface);
+  --primary: var(--md-primary);
+  --primary-container: var(--md-primary-container);
+  --on-primary-container: var(--md-on-primary-container);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface: var(--md-surface-dark);
+  --on-surface: var(--md-on-surface-dark);
+  --primary: var(--md-primary-dark);
+  --primary-container: var(--md-primary-container-dark);
+  --on-primary-container: var(--md-on-primary-container-dark);
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--surface);
+  color: var(--on-surface);
+background: linear-gradient(135deg, #fafafa, #eaeaea);
+
+}
+
+/* Carte Material You */
+.theme-card {
+  max-width: 360px;
+  margin: 32px auto;
+  padding: 16px 16px 20px;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--surface) 92%, var(--primary-container) 8%);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.18),
+    0 3px 6px rgba(0, 0, 0, 0.14);
+}
+
+.theme-title {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* Groupe de boutons radio */
+.theme-radio-group {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 80%, var(--primary-container) 20%);
+}
+
+/* Label = pill Material You */
+.theme-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--on-surface);
+  user-select: none;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.theme-radio input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Cercle radio */
+.theme-radio-control {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--on-surface) 60%, transparent 40%);
+  box-sizing: border-box;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+/* Inner dot */
+.theme-radio-control::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.18s ease;
+}
+
+/* État sélectionné */
+.theme-radio input:checked + .theme-radio-control {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 20%, transparent 80%);
+}
+
+.theme-radio input:checked + .theme-radio-control::after {
+  background: var(--primary);
+}
+
+.theme-radio input:checked ~ span,
+.theme-radio input:checked ~ .label-text {
+  color: var(--on-surface);
+}
+
+/* Fond pill sélectionné */
+.theme-radio input:checked ~ * {
+  /* rien ici, on cible le label via :has plus bas si supporté */
+}
+
+/* :has pour fond du pill (support moderne) */
+.theme-radio:has(input:checked) {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+/* Hover / focus */
+.theme-radio:hover {
+  background: color-mix(in srgb, var(--primary-container) 40%, transparent 60%);
+}
+
+.theme-radio input:focus-visible + .theme-radio-control {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.automodesombre{
+  background-color:blue;
+  border-radius:10px;
+}
+
+
+.nicobox {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.18),
+    0 3px 6px rgba(0, 0, 0, 0.14);
+  margin: auto !important;
+  width: 800px !important;
+}
+
+</style>
+
+  
+`);
