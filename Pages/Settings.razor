@@ -44,11 +44,40 @@ Sauvegarde Temps de Connexion :   <select>
     </select>  
 <hr>
 
-Sauvegarde Temps de Lecture:   <select>
+Sauvegarde Temps de Lecture:   
+<select>
       <option>Oui</option>
       <option>Non</option>
     </select>  
 <hr>
+
+<!--
+
+Taille des vignettes (petites / moyennes / grandes)
+Mode compact (réduit les marges et espaces)
+Afficher les catégories dans le menu latéral
+Afficher les durées sur les vignettes
+Afficher les badges (Nouveau / Vu / Favori)
+
+-->
+
+
+Historique de lecture (Activer / Désactiver)  et effacer pour user actuel
+<select>
+      <option>Oui</option>
+      <option>Non</option>
+    </select>  
+<button>Effacer historique</button>
+<hr>
+
+Recommandations
+<select>
+      <option>Oui</option>
+      <option>Non</option>
+    </select>  
+<hr>
+
+
 
 <p>Utilisateur en cours :  <a href="#">Nicolas</a></p>
 <div class="UserSettings">
@@ -78,6 +107,22 @@ Version Application:  v1.0<hr>
 <hr>
 
   </div>
+
+
+<div class="nicobox">
+<h1 class="titleGeneral"> Vignettes</h1>
+<p>Téléchargement auto des vignettes  : 
+<select>
+      <option>Oui</option>
+      <option>Non</option>
+</select>  
+</div>
+
+
+<div id="footer">&nbsp<div>
+
+<p>
+
 
 
 
@@ -274,6 +319,12 @@ background: linear-gradient(135deg, #fafafa, #eaeaea);
     0 3px 6px rgba(0, 0, 0, 0.14);
   margin: auto !important;
   width: 800px !important;
+padding-bottom:50px;
+}
+
+
+#footer{
+min-height:400px;
 }
 
 </style>
